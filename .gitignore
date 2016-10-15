@@ -4,16 +4,16 @@
 
 # Package Files #
 #################
-*.jar
-*.war
-*.ear
+#*.jar
+#*.war
+#*.ear
 
 # Generated build directories #
 ###############################
 .gradle/
-build
-bin
-out
+build/
+bin/
+out/
 
 # IDE files and directories #
 #############################
