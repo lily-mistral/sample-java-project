@@ -1,7 +1,17 @@
 language: java
 jdk: oraclejdk8
 
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "ZHUfSdzANwK3B6fUFz3c2wYUGhoV7xegIrRSitzgsP0/xiLz+sX/FaSfOGmZERuvPAUntIa71J8VJDcVaVUey3rgz4hBry5y2kd2oP97Sz4A02BqPLvhi9E/B4wL0cj+qd9KGGs/dmdkla/JDLeMo2t3bStgIYlQtlauSvxzZT1ZDKgbP8Ji5j+s8bqqAWXEkq7hQGLAdfX0xdzAgJtd2nZ+m06RW0HYKzMC3Z7zc1dnPtxxJeuW5ajUz4EhyrrGKj27XPFvytq0r2WPxScGlwH4nO2d1YMQbAOKFwJJsRXJDFFz1mE2n6ThpACZe4MY35KG6xPHS2F3EiOagLhrG/HUrcP0ifIPiVltpgHr0z1UVrDMBkQ66h2xx8r30OttK2771XrpQ6LnK/u00kOxmmgEx9OyCq/AsFRD4Du84Qa8gsYNMV/uu0fenqHs1Wky44v0MXcpIQd5cPlDRngwgezbM3LAaPbzjYPFV1zoIfmaDGQ6fudna9Z9DIMRIY/A/TN4tLvuZvewOelqVQptSN5Zynjia04zODX+Uyt5tlo1jJ+7ORcTNQdxJl2+f4E+AP3bZcINx6bdNQEh6CpPn2NEwHoWQlLrtdyuN7/RvY2jfZatlmmAJOAss3Hn/iWl6HnxPGcwewCD4D+3eQpSdfjbznlGqXwLUvM03gHOyi8="
+
+
 script: ./gradlew --stacktrace clean build
+
+before_install:
+      - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -14,3 +24,12 @@ cache:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+
+addons:
+  coverity_scan:
+    project:
+      name: "lily-mistral/sample-java-project"
+      description: "Sample project for tech processes"
+    notification_email: petehayes@gmail.com
+    build_command:  ./gradlew build
+    branch_pattern: coverity_scan
