@@ -4,3 +4,6 @@
 
 # sample-java-project
 Example of what a typical bare bones java project should look like
+
+## Documentation
+javadocs can be found via [github pages here](https://lily-mistral.github.io/sample-java-project/docs/javadoc/)
