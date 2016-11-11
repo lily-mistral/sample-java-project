@@ -48,7 +48,8 @@ bintray {
     publish = true
 
     pkg {
-        repo = 'java-libraries'
+        userOrg = "${project.bintrayUserOrg}"
+        repo = "${project.repository}"
         name = "${project.name}"
         desc = "${project.description}"
         websiteUrl = "https://github.com/${project.organization}/${project.name}"
